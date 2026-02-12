@@ -1,0 +1,39 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./BACKEND
+    restart: unless-stopped
+    env_file:
+      - ./BACKEND/.env
+    environment:
+      MONGO_URI: mongodb://mongo:27017/url-shortner
+      APP_URL: http://localhost:3000
+      CORS_ORIGIN: http://localhost:8080
+      COOKIE_SECURE: "false"
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./FRONTEND
+      args:
+        VITE_API_BASE_URL: http://localhost:3000
+        VITE_PUBLIC_APP_URL: http://localhost:3000
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+volumes:
+  mongo_data:

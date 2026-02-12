@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+:root {
+  --bg-1: #effaf6;
+  --bg-2: #fff6ec;
+  --bg-3: #f5f8ff;
+  --ink-1: #14213d;
+  --ink-2: #344e41;
+  --accent-1: #ef476f;
+  --accent-2: #118ab2;
+  --accent-3: #06d6a0;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: #ffffff;
+  --ring: rgba(17, 138, 178, 0.35);
+  --shadow: 0 20px 45px rgba(20, 33, 61, 0.13);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink-1);
+  background:
+    radial-gradient(circle at 12% 20%, rgba(6, 214, 160, 0.17), transparent 38%),
+    radial-gradient(circle at 85% 10%, rgba(239, 71, 111, 0.14), transparent 35%),
+    radial-gradient(circle at 72% 80%, rgba(17, 138, 178, 0.18), transparent 36%),
+    linear-gradient(135deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Sora", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(6, 214, 160, 0.25);
+}
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.glass-card {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+}
+
+.action-btn {
+  border: 0;
+  border-radius: 0.85rem;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+}
+
+.action-btn:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid rgba(20, 33, 61, 0.15);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.72rem 0.92rem;
+  font-size: 0.98rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(17, 138, 178, 0.58);
+  box-shadow: 0 0 0 4px rgba(17, 138, 178, 0.12);
+}
+
+.gradient-text {
+  background: linear-gradient(110deg, #ef476f, #118ab2 55%, #06d6a0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.fade-up {
+  animation: fadeUp 500ms ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
