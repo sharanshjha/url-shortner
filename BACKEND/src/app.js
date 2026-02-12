@@ -34,7 +34,11 @@ const isTrustedOrigin = (origin) => {
       return true;
     }
 
-    if (hostname.endsWith(".netlify.app") || hostname.endsWith(".onrender.com")) {
+    if (
+      hostname.endsWith(".netlify.app") ||
+      hostname.endsWith(".onrender.com") ||
+      hostname.endsWith(".vercel.app")
+    ) {
       return true;
     }
   } catch {
