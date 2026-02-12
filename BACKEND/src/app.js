@@ -18,10 +18,36 @@ import shortUrlRoutes from "./routes/short_url.route.js";
 import userRoutes from "./routes/user.routes.js";
 import { redirectFromShortUrl } from "./controller/short_url.controller.js";
 
+const isTrustedOrigin = (origin) => {
+  if (!origin) {
+    return true;
+  }
+
+  if (env.ALLOWED_ORIGINS.includes(origin)) {
+    return true;
+  }
+
+  try {
+    const { hostname } = new URL(origin);
+
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return true;
+    }
+
+    if (hostname.endsWith(".netlify.app") || hostname.endsWith(".onrender.com")) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+
+  return false;
+};
+
 const buildCorsOptions = () => ({
   credentials: true,
   origin: (origin, callback) => {
-    if (!origin || env.ALLOWED_ORIGINS.includes(origin)) {
+    if (isTrustedOrigin(origin)) {
       callback(null, true);
       return;
     }

@@ -11,7 +11,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(16, "JWT_SECRET must be at least 16 characters"),
   JWT_EXPIRES_IN: z.string().default("7d"),
   COOKIE_NAME: z.string().default("accessToken"),
-  COOKIE_SAME_SITE: z.enum(["lax", "strict", "none"]).default("lax"),
+  COOKIE_SAME_SITE: z.enum(["lax", "strict", "none"]).optional(),
   COOKIE_SECURE: z.enum(["true", "false"]).optional(),
   COOKIE_MAX_AGE_MS: z.coerce.number().int().positive().default(1000 * 60 * 60 * 24 * 7),
   CORS_ORIGIN: z.string().default("http://localhost:5173"),
@@ -32,6 +32,7 @@ const appUrl = rawEnv.APP_URL.replace(/\/+$/, "");
 const allowedOrigins = rawEnv.CORS_ORIGIN.split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
+const cookieSameSite = rawEnv.COOKIE_SAME_SITE || (rawEnv.NODE_ENV === "production" ? "none" : "lax");
 
 const cookieSecure =
   rawEnv.COOKIE_SECURE === undefined
@@ -42,6 +43,7 @@ export const env = {
   ...rawEnv,
   APP_URL: appUrl,
   ALLOWED_ORIGINS: allowedOrigins,
+  COOKIE_SAME_SITE: cookieSameSite,
   COOKIE_SECURE: cookieSecure,
 };
 
