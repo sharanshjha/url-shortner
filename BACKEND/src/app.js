@@ -73,7 +73,7 @@ const createApp = () => {
   app.use("/api/v1/urls", shortUrlRoutes);
   app.use("/api/v1/user", userRoutes);
 
-  app.get("/:id([A-Za-z0-9_-]{4,32})", redirectFromShortUrl);
+  app.get("/:id", redirectFromShortUrl);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

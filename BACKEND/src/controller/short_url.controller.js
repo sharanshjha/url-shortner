@@ -3,6 +3,8 @@ import {
   deleteUserUrlService,
   resolveRedirectTarget,
 } from "../services/short_url.service.js";
+import { NotFoundError } from "../utils/errorHandler.js";
+import { isSlugValid } from "../utils/helper.js";
 import wrapAsync from "../utils/tryCatchWrapper.js";
 
 export const createShortUrl = wrapAsync(async (req, res) => {
@@ -23,6 +25,9 @@ export const createShortUrl = wrapAsync(async (req, res) => {
 
 export const redirectFromShortUrl = wrapAsync(async (req, res) => {
   const { id } = req.params;
+  if (!isSlugValid(id)) {
+    throw new NotFoundError("Short URL not found");
+  }
   const target = await resolveRedirectTarget(id);
 
   res.redirect(302, target);
