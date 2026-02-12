@@ -4,12 +4,12 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import hpp from "hpp";
-import mongoSanitize from "express-mongo-sanitize";
 import pinoHttp from "pino-http";
 
 import { env } from "./config/env.js";
 import { logger } from "./lib/logger.js";
 import { apiRateLimiter } from "./middleware/rate-limit.middleware.js";
+import { sanitizeRequest } from "./middleware/sanitize.middleware.js";
 import { attachUser } from "./utils/attachUser.js";
 import { errorHandler, notFoundHandler } from "./utils/errorHandler.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -53,7 +53,7 @@ const createApp = () => {
   app.use(express.json({ limit: "100kb" }));
   app.use(express.urlencoded({ extended: true, limit: "100kb" }));
   app.use(cookieParser());
-  app.use(mongoSanitize());
+  app.use(sanitizeRequest);
   app.use(hpp());
   app.use(compression());
 
